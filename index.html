@@ -137,10 +137,16 @@
     <!-- DENIED Modal END -->
 
     <!-- Core Vendors JS -->
-		<script src="assets/js/vendors.min.js"></script>
+    <script src="assets/js/vendors.min.js"></script>
 
     <!-- Custom JS -->
-		<script type="text/javascript">
+    <script type="text/javascript">
+      document.getElementById("authorization-code").addEventListener("keydown", function (e) {
+        if (e.keyCode === 13) {
+          validatePassword();
+        }
+      });
+
       $(document).ready(function() {
         $('#authorized-modal').on('hidden.bs.modal', function () {
           $("del").css({"transform": "none", "text-decoration": "none", "user-select": "all", "background-color": "lightgray", "color": "#000000"});
@@ -149,13 +155,17 @@
       });
 
       function validatePassword() {
-        var code = $("#authorization-code").val();
-        $("#authorization-code").val("");
-        if (code === "stevie") {
-          $("#authorized-modal").modal("toggle");
-        } else {
-          $("#denied-modal").modal("toggle");
-        }
+	try {
+          var code = $("#authorization-code").val().toLowerCase();
+          $("#authorization-code").val("");
+          if (code === "stevie") {
+            $("#authorized-modal").modal("toggle");
+          } else {
+            $("#denied-modal").modal("toggle");
+          }
+	} catch (err) {
+	  $("#denied-modal").modal("toggle");
+	}
       }
     </script>
   </body>
